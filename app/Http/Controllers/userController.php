@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\createUserRequest;
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\editUserRequest;
 
-class userController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,7 +47,7 @@ class userController extends Controller
             "email" => $request->email,
             "password" => $request->password,
         ]);
-        return redirect('/users/index');
+        return redirect('users.index');
     }
 
     /**

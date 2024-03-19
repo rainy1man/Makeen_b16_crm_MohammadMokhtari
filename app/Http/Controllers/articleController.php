@@ -52,8 +52,9 @@ class articleController extends Controller
      */
     public function edit(string $id)
     {
+        $categories = DB::table('categories')->get();
         $article = DB::table('articles')->where('id', $id)->first();
-        return view('articles.edit', ["article" => $article]);
+        return view('articles.edit', ["article" => $article, 'categories' => $categories]);
     }
 
     /**

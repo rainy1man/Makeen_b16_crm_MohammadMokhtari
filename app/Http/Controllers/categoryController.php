@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class categoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $categories = DB::table('categories')->get();
+        return view('categories.index', ["categories" => $categories]);
     }
 
     /**
@@ -19,7 +21,7 @@ class categoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -27,7 +29,11 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('categories')->insert([
+            "categoryName" => $request->categoryName,
+            "description" => $request->description,
+        ]);
+        return redirect('/categories/index');
     }
 
     /**
@@ -43,7 +49,8 @@ class categoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = DB::table('categories')->where('id', $id)->first();
+        return view('categories.edit', ["category" => $category]);
     }
 
     /**
@@ -51,7 +58,11 @@ class categoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::table('categories')->where('id', $id)->update([
+            "categoryName" => $request->categoryName,
+            "description" => $request->description,
+        ]);
+        return redirect('/categories/index');
     }
 
     /**
@@ -59,6 +70,7 @@ class categoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('categories')->where('id', $id)->delete();
+        return redirect('/categories/index');
     }
 }

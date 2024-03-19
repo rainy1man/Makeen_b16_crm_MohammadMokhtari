@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\CreateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class productController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class productController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
         DB::table('products')->insert([
             "productName" => $request->productName,
