@@ -15,11 +15,11 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="../login.php">ورود</a></li>
                 <li class="nav-item"><a class="nav-link" href="../register.php">ثبت نام</a></li>
-                <li class="nav-item"><a class="nav-link" href="../categories/index">دسته بندی</a></li>
-                <li class="nav-item"><a class="nav-link" href="../products/index">محصولات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../orders/index">سفارشات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../users/index">کاربران</a></li>
-                <li class="nav-item"><a class="nav-link" href="../articles/index">مجله</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">محصولات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('orders.index') }}">سفارشات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">کاربران</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">مجله</a></li>
             </ul>
         </div>
     </nav>
@@ -54,8 +54,8 @@
                         <td>{{ $order->address }}</td>
                         <td>{{ $order->exp }}</td>
                         <td>
-                            <a href="/orders/edit/{{ $order->id }}">ویرایش</a> /
-                            <form action="/orders/delete/{{ $order->id }}" method="post">
+                            <a href="{{ route('orders.edit', ['id' => $order->id]) }}">ویرایش</a> /
+                            <form action="{{ route('orders.delete', ['id' => $order->id]) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" value="delete">

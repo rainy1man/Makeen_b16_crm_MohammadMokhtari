@@ -13,13 +13,13 @@
     <nav class="navbar navbar-expand-sm bg-light container">
         <div class="container-fluid">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="../login">ورود</a></li>
-                <li class="nav-item"><a class="nav-link" href="../register">ثبت نام</a></li>
-                <li class="nav-item"><a class="nav-link" href="../categories/index">ثبت نام</a></li>
-                <li class="nav-item"><a class="nav-link" href="../products/index">محصولات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../orders/index">سفارشات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../users/index">کاربران</a></li>
-                <li class="nav-item"><a class="nav-link" href="../articles/index">مجله</a></li>
+                <li class="nav-item"><a class="nav-link" href="../login.php">ورود</a></li>
+                <li class="nav-item"><a class="nav-link" href="../register.php">ثبت نام</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">محصولات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('orders.index') }}">سفارشات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">کاربران</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">مجله</a></li>
             </ul>
         </div>
     </nav>
@@ -44,8 +44,8 @@
                         <td>{{ $category->categoryName }}</td>
                         <td>{{ $category->description }}</td>
                         <td>
-                            <a href="/categories/edit/{{ $category->id }}">ویرایش</a> /
-                            <form action="/categories/delete/{{ $category->id }}" method="post">
+                            <a href="{{ route('categories.edit', ['id' => $category->id]) }}">ویرایش</a> /
+                            <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" value="delete">

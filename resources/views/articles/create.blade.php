@@ -15,28 +15,32 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="../login.php">ورود</a></li>
                 <li class="nav-item"><a class="nav-link" href="../register.php">ثبت نام</a></li>
-                <li class="nav-item"><a class="nav-link" href="../categories/index">دسته بندی</a></li>
-                <li class="nav-item"><a class="nav-link" href="../products/index">محصولات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../orders/index">سفارشات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../users/index">کاربران</a></li>
-                <li class="nav-item"><a class="nav-link" href="../articles/index">مجله</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">محصولات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('orders.index') }}">سفارشات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">کاربران</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">مجله</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
-        <form action="/articles/create" method="post">
+        <form action="{{ route('articles.store') }}" method="post">
             @csrf
             <h2>ثبت مقاله جدید</h2>
 
             <div class="mb-3 mt-3">
                 <label class="form-label">عنوان:</label>
-                <input type="text" class="form-control" placeholder="عنوان را وارد نمایید" name="title" />
+                <input type="text" class="form-control" placeholder="عنوان را وارد نمایید" name="title"
+                    value="{{ old('title') }}" />
+                @error('title')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mb-3 mt-3">
                 <label class="form-label">دسته بندی:</label>
-                <select class="form-control" name="category">
+                <select class="form-control" name="category_id">
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->categoryName }}</option>
                     @endforeach
@@ -45,7 +49,11 @@
 
             <div class="mb-3">
                 <label class="form-label">متن:</label>
-                <input type="text" class="form-control" placeholder="متن را وارد نمایید" name="textPost" />
+                <input type="text" class="form-control" placeholder="متن را وارد نمایید" name="textPost"
+                    value="{{ old('textPost') }}" />
+                @error('textPost')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-light">ثبت</button>

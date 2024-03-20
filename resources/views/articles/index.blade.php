@@ -15,11 +15,11 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="../login.php">ورود</a></li>
                 <li class="nav-item"><a class="nav-link" href="../register.php">ثبت نام</a></li>
-                <li class="nav-item"><a class="nav-link" href="../categories/index">دسته بندی</a></li>
-                <li class="nav-item"><a class="nav-link" href="../products/index">محصولات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../orders/index">سفارشات</a></li>
-                <li class="nav-item"><a class="nav-link" href="../users/index">کاربران</a></li>
-                <li class="nav-item"><a class="nav-link" href="../articles/index">مجله</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">دسته بندی</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('products.index') }}">محصولات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('orders.index') }}">سفارشات</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">کاربران</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('articles.index') }}">مجله</a></li>
             </ul>
         </div>
     </nav>
@@ -46,13 +46,14 @@
                 @foreach ($articles as $article)
                     <tr>
                         <td>{{ $article->title }}</td>
-                        <td>{{ $article->category }}</td>
+                        <td>{{ $article->category_id }}</td>
                         <td>{{ $article->textPost }}</td>
                         <td>
                             <button>
-                                <a href="/articles/edit/{{ $article->id }}">ویرایش</a>
+                                <a href="{{ route('articles.edit', ['id' => $article->id]) }}">ویرایش</a>
                             </button>
-                            <form action="/articles/delete/{{ $article->id }}" method="post">
+
+                            <form action="{{ route('articles.delete', ['id' => $article->id]) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" value="delete">
@@ -61,7 +62,6 @@
                     </tr>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 </body>
