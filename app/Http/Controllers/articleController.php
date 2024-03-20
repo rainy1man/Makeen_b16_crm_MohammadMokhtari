@@ -33,7 +33,7 @@ class articleController extends Controller
     {
         DB::table('articles')->insert([
             "title" => $request->title,
-            "category" => $request->category,
+            "category_id" => $request->category_id,
             "textPost" => $request->textPost,
         ]);
         return redirect('/articles/index');
@@ -64,7 +64,7 @@ class articleController extends Controller
     {
         DB::table('articles')->where('id', $id)->update([
             "title" => $request->title,
-            "category" => $request->category,
+            "category_id" => $request->category_id,
             "textPost" => $request->textPost,
         ]);
         return redirect('/articles/index');
