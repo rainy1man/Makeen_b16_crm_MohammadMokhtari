@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequests\CreateOrderRequest;
+use App\Http\Requests\OrderRequests\EditOrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +29,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateOrderRequest $request)
     {
         DB::table('orders')->insert([
             "customerName" => $request->customerName,
@@ -61,7 +63,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditOrderRequest $request, string $id)
     {
         DB::table('orders')->where('id', $id)->update([
             "customerName" => $request->customerName,

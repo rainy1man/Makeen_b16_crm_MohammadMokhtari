@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequests\CreateArticleRequest;
+use App\Http\Requests\ArticleRequests\EditArticleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +31,7 @@ class articleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateArticleRequest $request)
     {
         DB::table('articles')->insert([
             "title" => $request->title,
@@ -60,7 +62,7 @@ class articleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditArticleRequest $request, string $id)
     {
         DB::table('articles')->where('id', $id)->update([
             "title" => $request->title,

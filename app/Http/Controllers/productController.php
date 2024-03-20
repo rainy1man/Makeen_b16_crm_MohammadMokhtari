@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\ProductRequests\CreateProductRequest;
+use App\Http\Requests\ProductRequests\EditProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +62,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProductRequest $request, string $id)
     {
         DB::table('products')->where('id', $id)->update([
             "productName" => $request->productName,

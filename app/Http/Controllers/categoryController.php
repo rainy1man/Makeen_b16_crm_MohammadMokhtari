@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequests\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequests\EditCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +29,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         DB::table('categories')->insert([
             "categoryName" => $request->categoryName,
@@ -56,7 +58,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditCategoryRequest $request, string $id)
     {
         DB::table('categories')->where('id', $id)->update([
             "categoryName" => $request->categoryName,

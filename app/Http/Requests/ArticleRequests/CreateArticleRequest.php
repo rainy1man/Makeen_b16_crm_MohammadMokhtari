@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\ArticleRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class createUserRequest extends FormRequest
+class CreateArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,9 +22,7 @@ class createUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'codeMelli' => ['required', 'integer'],
-            'phoneNumber' => ['required', 'between:11,11'],
+            //
         ];
     }
 }

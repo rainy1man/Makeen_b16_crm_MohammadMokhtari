@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest as RequestsCreateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\editUserRequest;
+use App\Http\Requests\UserRequests\CreateUserRequest;
+use App\Http\Requests\UserRequests\EditUserRequest;
 
 class UserController extends Controller
 {
@@ -30,7 +31,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(createUserRequest $request)
+    public function store(CreateUserRequest $request)
     {
 
         // $request->validate([
@@ -70,7 +71,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(editUserRequest $request, string $id)
+    public function update(EditUserRequest $request, string $id)
     {
         DB::table('users')->where('id', $id)->update([
             "name" => $request->name,
