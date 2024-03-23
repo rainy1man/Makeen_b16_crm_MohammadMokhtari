@@ -11,7 +11,7 @@ class EditProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class EditProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'productName' => ['required', 'unique:products,productName,' . $this->id],
+            'brand' => ['required'],
+            'price' => ['required', 'integer']
         ];
     }
 }

@@ -11,7 +11,7 @@ class EditOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class EditOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customerName' => ['required'],
+            'orderNumber' => ['required', 'digits:10', 'unique:orders,orderNumber,' . $this->id],
+            'price' => ['required', 'integer'],
+            'phoneNumber' => ['required', 'digits:11', 'regex:/(09)[0-9]{9}/'],
+            'address' => ['required']
         ];
     }
 }

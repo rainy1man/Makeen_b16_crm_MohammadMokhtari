@@ -24,8 +24,10 @@ class EditUserRequest extends FormRequest
         return [
             //, 'unique:table,column,' . $this->id
             'name' => ['required'],
-            'codeMelli' => ['required', 'integer'],
-            'phoneNumber' => ['required', 'between:11,11'],
+            'codeMelli' => ['required', 'unique:users,codeMelli,' . $this->id],
+            'phoneNumber' => ['required', 'digits:11', 'regex:/(09)[0-9]{9}/', 'unique:users,phoneNumber,'. $this->id],
+            'email' => ['required', 'unique:users,email,'. $this->id],
+            'password' => ['required', 'between:6,12', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/']
         ];
     }
 }
