@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateUserRequest as RequestsCreateUserRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequests\CreateUserRequest;
 use App\Http\Requests\UserRequests\EditUserRequest;
@@ -48,7 +46,7 @@ class UserController extends Controller
             "email" => $request->email,
             "password" => $request->password,
         ]);
-        return redirect('users.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -81,7 +79,7 @@ class UserController extends Controller
             "gender" => $request->gender,
             "email" => $request->email,
         ]);
-        return redirect('/users/index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -90,6 +88,6 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         DB::table('users')->where('id', $id)->delete();
-        return redirect('/users/index');
+        return redirect()->route('users.index');
     }
 }

@@ -35,7 +35,7 @@ class CategoryController extends Controller
             "categoryName" => $request->categoryName,
             "description" => $request->description,
         ]);
-        return redirect('/categories/index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -64,7 +64,7 @@ class CategoryController extends Controller
             "categoryName" => $request->categoryName,
             "description" => $request->description,
         ]);
-        return redirect('/categories/index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -73,6 +73,6 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         DB::table('categories')->where('id', $id)->delete();
-        return redirect('/categories/index');
+        return redirect()->route('categories.index');
     }
 }

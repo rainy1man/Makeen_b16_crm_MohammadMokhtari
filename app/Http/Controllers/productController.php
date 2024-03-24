@@ -39,7 +39,7 @@ class ProductController extends Controller
             "price" => $request->price,
             "exp" => $request->exp,
         ]);
-        return redirect('/products/index');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -72,7 +72,7 @@ class ProductController extends Controller
             "price" => $request->price,
             "exp" => $request->exp,
         ]);
-        return redirect('/products/index');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -81,6 +81,6 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         DB::table('products')->where('id', $id)->delete();
-        return redirect('/products/index');
+        return redirect()->route('products.index');
     }
 }

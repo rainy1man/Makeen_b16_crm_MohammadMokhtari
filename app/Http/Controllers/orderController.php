@@ -40,7 +40,7 @@ class OrderController extends Controller
             "address" => $request->address,
             "exp" => $request->exp,
         ]);
-        return redirect('/orders/index');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -74,7 +74,7 @@ class OrderController extends Controller
             "address" => $request->address,
             "exp" => $request->exp,
         ]);
-        return redirect('/orders/index');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -83,6 +83,6 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         DB::table('orders')->where('id', $id)->delete();
-        return redirect('/orders/index');
+        return redirect()->route('orders.index');
     }
 }

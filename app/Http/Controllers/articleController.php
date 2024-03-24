@@ -38,7 +38,7 @@ class articleController extends Controller
             "category_id" => $request->category_id,
             "textPost" => $request->textPost,
         ]);
-        return redirect('/articles/index');
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class articleController extends Controller
             "category_id" => $request->category_id,
             "textPost" => $request->textPost,
         ]);
-        return redirect('/articles/index');
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -78,6 +78,6 @@ class articleController extends Controller
     public function destroy(string $id)
     {
         DB::table('articles')->where('id', $id)->delete();
-        return redirect('/articles/index');
+        return redirect()->route('articles.index');
     }
 }
