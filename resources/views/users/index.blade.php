@@ -6,7 +6,7 @@
     <div class="container mt-3">
         <h2>کاربران</h2>
         <button type="submit" class="btn btn-light">
-            <a href="create">کاربر جدید</a>
+            <a href="{{ route('users.create') }}">کاربر جدید</a>
         </button>
         <br />
         <br />
@@ -34,8 +34,8 @@
                         <td>{{ $user->gender }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('users.edit', ['id' => $user->id]) }}">ویرایش</a> /
-                            <form action="{{ route('users.delete', ['id' => $user->id]) }}" method="post">
+                            <a href="{{ route('users.edit', ['user' => $user->id]) }}">ویرایش</a> /
+                            <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" value="delete">
