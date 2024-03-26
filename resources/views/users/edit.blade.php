@@ -5,8 +5,9 @@
 @section('content')
 
     <div class="container">
-        <form action="{{ route('users.update', ['id' => $user->id]) }}" method="post">
+        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="post">
             @csrf
+            @method("put")
             <h2>ویرایش کاربر</h2>
 
             <div class="mb-3 mt-3">

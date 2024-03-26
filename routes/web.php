@@ -26,15 +26,15 @@ Route::get('/', function () {
 
 //User Routes ..................................................
 
-// Route::resource('users', userController::class)->except('show');
-Route::prefix('users')->group(function () {
-Route::get('index', [UserController::class, 'index'])->name('users.index');
-Route::get('create', [UserController::class, 'create'])->name('users.create');
-Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-Route::post('create', [UserController::class, 'store'])->name('users.store');
-Route::post('edit/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('users.delete');
-});
+Route::resource('users', UserController::class)->except('show');
+// Route::prefix('users')->group(function () {
+// Route::get('index', [UserController::class, 'index'])->name('users.index');
+// Route::get('create', [UserController::class, 'create'])->name('users.create');
+// Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+// Route::post('create', [UserController::class, 'store'])->name('users.store');
+// Route::post('edit/{id}', [UserController::class, 'update'])->name('users.update');
+// Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('users.delete');
+// });
 
 //product Routes ...............................................
 Route::prefix('products')->group(function () {

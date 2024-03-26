@@ -69,9 +69,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditUserRequest $request, string $id)
+    public function update(EditUserRequest $request, string $user)
     {
-        DB::table('users')->where('id', $id)->update([
+        DB::table('users')->where('id', $user)->update([
             "name" => $request->name,
             "codeMelli" => $request->codeMelli,
             "phoneNumber" => $request->phoneNumber,
