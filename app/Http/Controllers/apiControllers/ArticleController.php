@@ -4,6 +4,7 @@ namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -12,7 +13,12 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = DB::table('articles')
+            ->join('categories', 'categories.id', '=', 'articles.category_id')
+            ->select('articles.*', 'categories.categoryName', 'categories.description')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
+        return response()->json($articles);
     }
 
     /**
@@ -28,15 +34,17 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = DB::table('articles')->insert($request->toArray());
+        return response()->json($article);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $article)
     {
-        //
+        $article = DB::table('articles')->where('id', $article)->first();
+        return response()->json($article);
     }
 
     /**
@@ -50,16 +58,18 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $article)
     {
-        //
+        $article = DB::table('articles')->where('id', $article)->update($request->toArray());
+        return response()->json($article);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $article)
     {
-        //
+        $article = DB::table('articles')->where('id', $article)->delete();
+        return response()->json($article);
     }
 }

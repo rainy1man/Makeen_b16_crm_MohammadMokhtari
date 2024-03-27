@@ -4,6 +4,7 @@ namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class categoryController extends Controller
 {
@@ -12,7 +13,8 @@ class categoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = DB::table('categories')->orderBy('id', 'desc')->paginate(5);
+        return response()->json($categories);
     }
 
     /**
@@ -28,15 +30,17 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = DB::table('categories')->insert($request->toArray());
+        return response()->json($category);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $category)
     {
-        //
+        $category = DB::table('categories')->where('id', $category)->first();
+        return response()->json($category);
     }
 
     /**
@@ -50,16 +54,18 @@ class categoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $category)
     {
-        //
+        $category = DB::table('categories')->where('id', $category)->update($request->toArray());
+       return response()->json($category);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $category)
     {
-        //
+        $category = DB::table('categories')->where('id', $category)->delete();
+        return response()->json($category);
     }
 }
