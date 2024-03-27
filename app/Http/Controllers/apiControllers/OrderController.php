@@ -15,7 +15,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = DB::table('orders')->orderBy('id', 'desc')->paginate(5);
+        $orders = DB::table('orders')
+        ->join('users', 'users.id', '=', 'orders.user_id')
+        ->select('orders.*', 'users.name')
+        ->orderBy('id', 'desc')
+        ->paginate(5);
         return response()->json($orders);
     }
 
