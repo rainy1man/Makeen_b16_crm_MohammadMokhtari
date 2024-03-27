@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequests\CreateProductRequest;
+use App\Http\Requests\ProductRequests\EditProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -12,7 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = DB::table('orders')->orderBy('id', 'desc')->paginate(5);
+        return response()->json($orders);
     }
 
     /**
@@ -26,17 +30,19 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        //
+        $order = DB::table('orders')->insert($request->toArray());
+        return response()->json($order);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $order)
     {
-        //
+        $order = DB::table('orders')->where('id', $order)->first();
+        return response()->json($order);
     }
 
     /**
@@ -50,16 +56,18 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProductRequest $request, string $order)
     {
-        //
+    $order = DB::table('orders')->where('id', $order)->update($request->toArray());
+    return response()->json($order);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $order)
     {
-        //
+        $order = DB::table('orders')->where('id', $order)->delete();
+        return response()->json($order);
     }
 }
