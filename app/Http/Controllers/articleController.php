@@ -14,9 +14,11 @@ class articleController extends Controller
      */
     public function index()
     {
-        $articles = DB::table('articles')->get();
-        $categories = DB::table('categories')->get();
-        return view('articles.index', ["articles" => $articles], ["categories" => $categories]);
+        $articles = DB::table('articles')
+        ->join('categories', 'articles.category_id', '=', 'categories.id')
+        ->select('articles.*', 'categories.categoryName')
+        ->get();
+        return view('articles.index', ["articles" => $articles]);
     }
 
     /**

@@ -26,7 +26,7 @@
                 @foreach ($articles as $article)
                     <tr>
                         <td>{{ $article->title }}</td>
-                        <td>{{ $article->category_id }}</td>
+                        <td>{{ $article->categoryName }}</td>
                         <td>{{ $article->textPost }}</td>
                         <td>
                             <button>
