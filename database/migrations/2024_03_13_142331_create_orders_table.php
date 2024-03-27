@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('customerName');
+            $table->bigInteger('user_id');
             $table->string('orderNumber');
             $table->string('price');
             $table->enum('paymentStatus', ['online', 'cash']);
