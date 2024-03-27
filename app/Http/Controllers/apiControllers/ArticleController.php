@@ -13,7 +13,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = DB::table('articles')->orderBy('id', 'desc')->paginate(5);
+        $articles = DB::table('articles')
+            ->join('categories', 'categories.id', '=', 'articles.category_id')
+            ->select('articles.*', 'categories.categoryName', 'categories.description')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
         return response()->json($articles);
     }
 
