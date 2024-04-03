@@ -5,6 +5,7 @@ namespace App\Http\Controllers\apiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequests\CreateProductRequest;
 use App\Http\Requests\ProductRequests\EditProductRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')->orderBy('id', 'desc')->paginate(5);
+        $products = Product::orderBy('id', 'desc')->paginate(5);
         return response()->json($products);
     }
 
@@ -32,7 +33,7 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $product = DB::table('products')->insert($request->toArray());
+        $product = Product::create($request->toArray());
         return response()->json($product);
     }
 
@@ -41,7 +42,7 @@ class ProductController extends Controller
      */
     public function show(string $product)
     {
-        $product = DB::table('products')->where('id', $product)->first();
+        $product = Product::find($product);
         return response()->json($product);
     }
 
@@ -58,7 +59,7 @@ class ProductController extends Controller
      */
     public function update(EditProductRequest $request, string $product)
     {
-        $product = DB::table('products')->where('id', $product)->update($request->toArray());
+        $product = Product::where('id', $product)->update($request->toArray());
         return response()->json($product);
     }
 
@@ -67,7 +68,7 @@ class ProductController extends Controller
      */
     public function destroy(string $product)
     {
-        $product = DB::table('products')->where('id', $product)->delete();
+        $product = Product::destroy($product);
         return response()->json($product);
     }
 }

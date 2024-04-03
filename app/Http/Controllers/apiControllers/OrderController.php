@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequests\CreateProductRequest;
-use App\Http\Requests\ProductRequests\EditProductRequest;
+use App\Http\Requests\OrderRequests\CreateOrderRequest;
+use App\Http\Requests\OrderRequests\EditOrderRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,9 +16,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = DB::table('orders')
-        ->join('users', 'users.id', '=', 'orders.user_id')
-        ->select('orders.*', 'users.name')
+        $orders = Order::join('users', 'users.id', '=', 'orders.user_id')
+        ->join('products', 'products.id', '=', 'orders.product_id')
+        ->select('orders.*', 'users.firstName', 'users.lastName', 'users.phoneNumber', 'products.productName')
         ->orderBy('id', 'desc')
         ->paginate(5);
         return response()->json($orders);
@@ -34,9 +35,9 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateProductRequest $request)
+    public function store(CreateOrderRequest $request)
     {
-        $order = DB::table('orders')->insert($request->toArray());
+        $order = Order::create($request->toArray());
         return response()->json($order);
     }
 
@@ -45,7 +46,11 @@ class OrderController extends Controller
      */
     public function show(string $order)
     {
-        $order = DB::table('orders')->where('id', $order)->first();
+        $order = Order::join('users', 'users.id', '=', 'orders.user_id')
+        ->join('products', 'products.id', '=', 'orders.product_id')
+        ->select('orders.*', 'users.firstName', 'users.lastName', 'users.phoneNumber', 'products.productName')
+        ->find($order)
+        ->paginate(5);
         return response()->json($order);
     }
 
@@ -60,9 +65,9 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditProductRequest $request, string $order)
+    public function update(EditOrderRequest $request, string $order)
     {
-    $order = DB::table('orders')->where('id', $order)->update($request->toArray());
+    $order = Order::where('id', $order)->update($request->toArray());
     return response()->json($order);
     }
 
@@ -71,7 +76,7 @@ class OrderController extends Controller
      */
     public function destroy(string $order)
     {
-        $order = DB::table('orders')->where('id', $order)->delete();
+        $order = Order::destroy($order);
         return response()->json($order);
     }
 }

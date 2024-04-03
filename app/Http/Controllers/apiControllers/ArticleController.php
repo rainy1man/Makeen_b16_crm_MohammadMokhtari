@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleRequests\CreateArticleRequest;
+use App\Http\Requests\ArticleRequests\EditArticleRequest;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,8 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = DB::table('articles')
-            ->join('categories', 'categories.id', '=', 'articles.category_id')
+        $articles = Article::join('categories', 'categories.id', '=', 'articles.category_id')
             ->select('articles.*', 'categories.categoryName', 'categories.description')
             ->orderBy('id', 'desc')
             ->paginate(5);
@@ -32,9 +34,9 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateArticleRequest $request)
     {
-        $article = DB::table('articles')->insert($request->toArray());
+        $article = Article::create($request->toArray());
         return response()->json($article);
     }
 
@@ -43,7 +45,7 @@ class ArticleController extends Controller
      */
     public function show(string $article)
     {
-        $article = DB::table('articles')->where('id', $article)->first();
+        $article = Article::find($article);
         return response()->json($article);
     }
 
@@ -58,9 +60,9 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $article)
+    public function update(EditArticleRequest $request, string $article)
     {
-        $article = DB::table('articles')->where('id', $article)->update($request->toArray());
+        $article = Article::where('id', $article)->update($request->toArray());
         return response()->json($article);
     }
 
@@ -69,7 +71,7 @@ class ArticleController extends Controller
      */
     public function destroy(string $article)
     {
-        $article = DB::table('articles')->where('id', $article)->delete();
+        $article = Article::destroy($article);
         return response()->json($article);
     }
 }
