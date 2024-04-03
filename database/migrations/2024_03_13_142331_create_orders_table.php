@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('orderNumber');
-            $table->string('price');
+            $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('product_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->bigInteger('price');
             $table->enum('paymentStatus', ['online', 'cash']);
-            $table->string('phoneNumber');
             $table->string('address');
-            $table->string('exp');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

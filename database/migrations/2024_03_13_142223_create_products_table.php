@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('brand');
             $table->enum('scent', ['خنک', 'گرم', 'ملایم', 'تلخ', 'شیرین', 'ترش']);
             $table->enum('gender', ['آقایان', 'بانوان', 'آقایان/بانوان']);
-            $table->string('price');
-            $table->string('exp');
+            $table->bigInteger('price');
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
