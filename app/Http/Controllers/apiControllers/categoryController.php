@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequests\CreateCategoryRequest;
+use App\Http\Requests\CategoryRequests\EditCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +16,7 @@ class categoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::table('categories')->orderBy('id', 'desc')->paginate(5);
+        $categories = Category::orderBy('id', 'desc')->paginate(5);
         return response()->json($categories);
     }
 
@@ -28,9 +31,9 @@ class categoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $category = DB::table('categories')->insert($request->toArray());
+        $category = Category::create($request->toArray());
         return response()->json($category);
     }
 
@@ -39,7 +42,7 @@ class categoryController extends Controller
      */
     public function show(string $category)
     {
-        $category = DB::table('categories')->where('id', $category)->first();
+        $category = Category::find($category);
         return response()->json($category);
     }
 
@@ -54,9 +57,9 @@ class categoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $category)
+    public function update(EditCategoryRequest $request, string $category)
     {
-        $category = DB::table('categories')->where('id', $category)->update($request->toArray());
+        $category = Category::where('id', $category)->update($request->toArray());
        return response()->json($category);
     }
 
@@ -65,7 +68,7 @@ class categoryController extends Controller
      */
     public function destroy(string $category)
     {
-        $category = DB::table('categories')->where('id', $category)->delete();
+        $category = Category::destroy($category);
         return response()->json($category);
     }
 }

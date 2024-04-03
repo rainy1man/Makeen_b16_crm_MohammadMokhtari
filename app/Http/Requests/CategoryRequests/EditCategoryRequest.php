@@ -22,8 +22,7 @@ class EditCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'categoryName' => ['required', 'unique:categories,categoryName,' . $this->id],
-            'description' => ['required']
+            'categoryName' => ['required', 'unique:categories,categoryName,' . $this->category]
         ];
     }
 }

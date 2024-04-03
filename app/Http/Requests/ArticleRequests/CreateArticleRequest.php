@@ -11,7 +11,7 @@ class CreateArticleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class CreateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => "required",
+            'category_id ' => "required",
+            'articleText' => "required"
         ];
     }
 }
