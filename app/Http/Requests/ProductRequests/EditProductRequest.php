@@ -22,7 +22,7 @@ class EditProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'productName' => ['required', 'unique:products,productName,' . $this->id],
+            'productName' => ['required', 'unique:products,productName,' . $this->product],
             'brand' => ['required'],
             'price' => ['required', 'integer']
         ];

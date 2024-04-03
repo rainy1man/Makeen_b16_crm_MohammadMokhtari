@@ -22,12 +22,11 @@ class EditUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //, 'unique:table,column,' . $this->id
-            'name' => ['required'],
-            'codeMelli' => ['required', 'unique:users,codeMelli,' . $this->id],
-            'phoneNumber' => ['required', 'digits:11', 'regex:/(09)[0-9]{9}/', 'unique:users,phoneNumber,'. $this->id],
-            'email' => ['required', 'unique:users,email,'. $this->id],
-            'password' => ['required', 'between:6,12', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/']
+            'firstName' => ['required'],
+            'lastName' => ['required'],
+            'nationalCode' => ['required', 'unique:users,nationalCode,' . $this->user],
+            'phoneNumber' => ['required', 'digits:11', 'regex:/(09)[0-9]{9}/', 'unique:users,phoneNumber,' . $this->user],
+            'email' => ['required', 'unique:users,email,' . $this->user]
         ];
     }
 }

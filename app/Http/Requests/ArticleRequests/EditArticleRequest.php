@@ -22,7 +22,9 @@ class EditArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => "required",
+            'category_id ' => "required",
+            'articleText' => "required"
         ];
     }
 }
