@@ -5,6 +5,7 @@ namespace App\Http\Controllers\apiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequests\CreateUserRequest;
 use App\Http\Requests\UserRequests\EditUserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        $user = DB::table('users')->where('phoneNumber', $request->phoneNumber)->first();
+        $user = User::where('phoneNumber', $request->phoneNumber)->first();
 
         if (!$user) {
             return response()->json('not found');
@@ -24,7 +25,8 @@ class UserController extends Controller
         if (!Hash::check($request->password, $user->password)) {
             return response()->json('pass not found');
         }
-        return response()->json('ok');
+        $token = $user->createToken($request->phoneNumber)->plainTextToken;
+        return response()->json(["token" => $token]);
     }
 
     /**
@@ -32,7 +34,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->orderBy('id', 'desc')->paginate(5);
+        $users = User::orderBy('id', 'desc')->paginate(5);
         return response()->json($users);
     }
 
@@ -47,9 +49,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        $user = DB::table('users')->insert($request->merge(["password" => Hash::make($request->password)])->toArray());
+        $user = User::create($request->merge(["password" => Hash::make($request->password)])->toArray());
         return response()->json($user);
     }
 
@@ -58,7 +60,7 @@ class UserController extends Controller
      */
     public function show(string $user)
     {
-        $user = DB::table('users')->where('id', $user)->first();
+        $user = User::find($user);
         return response()->json($user);
     }
 
@@ -75,7 +77,7 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, string $user)
     {
-        $user = DB::table('users')->where('id', $user)->update($request->toArray());
+        $user = User::where('id', $user)->update($request->merge(["password" => Hash::make($request->password)])->toArray());
         return response()->json($user);
     }
 
@@ -84,7 +86,7 @@ class UserController extends Controller
      */
     public function destroy(string $user)
     {
-        $user = DB::table('users')->where('id', $user)->delete();
+        $user = User::destroy($user);
         return response()->json($user);
     }
 }
