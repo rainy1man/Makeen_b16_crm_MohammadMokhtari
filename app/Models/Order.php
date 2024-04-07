@@ -24,4 +24,9 @@ class Order extends Model
         'paymentStatus',
         'address'
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
