@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user')->orderBy('id', 'desc')->paginate(5);
+        $orders = Order::with('user')->with('product')->orderBy('id', 'desc')->paginate(5);
         return response()->json($orders);
     }
 
@@ -42,11 +42,7 @@ class OrderController extends Controller
      */
     public function show(string $order)
     {
-        $order = Order::join('users', 'users.id', '=', 'orders.user_id')
-        ->join('products', 'products.id', '=', 'orders.product_id')
-        ->select('orders.*', 'users.firstName', 'users.lastName', 'users.phoneNumber', 'products.productName')
-        ->find($order)
-        ->paginate(5);
+        $order = Order::with('user')->with('product')->find($order)->paginate(5);
         return response()->json($order);
     }
 
