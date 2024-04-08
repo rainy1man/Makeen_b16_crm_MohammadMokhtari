@@ -44,7 +44,7 @@ class ArticleController extends Controller
      */
     public function show(string $article)
     {
-        $article = Article::with('category')->where('id', $article)->first();
+        $article = Article::with('category')->find($article);
         return response()->json($article);
     }
 

@@ -42,7 +42,7 @@ class OrderController extends Controller
      */
     public function show(string $order)
     {
-        $order = Order::with(['user', 'product'])->where('id', $order)->first();
+        $order = Order::with(['user', 'product'])->find($order);
         return response()->json($order);
     }
 
