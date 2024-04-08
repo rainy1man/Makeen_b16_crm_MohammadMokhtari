@@ -22,4 +22,9 @@ class Article extends Model
         'category_id',
         'articleText'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

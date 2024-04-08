@@ -23,7 +23,7 @@ class CreateArticleRequest extends FormRequest
     {
         return [
             'title' => "required",
-            'category_id ' => "required",
+            'category_id' => "required",
             'articleText' => "required"
         ];
     }
