@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
-            $table->foreignId('product_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->string('slug')->nullable();
             $table->bigInteger('price');
             $table->enum('paymentStatus', ['online', 'cash']);
             $table->string('address');
