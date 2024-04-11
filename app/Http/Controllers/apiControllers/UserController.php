@@ -30,9 +30,9 @@ class UserController extends Controller
         return response()->json(["token" => $token]);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->user()->currentAccessToken()->delete();
+        auth()->user()->currentAccessToken()->delete();
         return response()->json("logout");
     }
 
