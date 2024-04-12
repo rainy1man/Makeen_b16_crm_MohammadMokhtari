@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequests\CreateUserRequest;
 use App\Http\Requests\UserRequests\EditUserRequest;
 use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,12 @@ class UserController extends Controller
         }
         $token = $user->createToken($request->phoneNumber)->plainTextToken;
         return response()->json(["token" => $token]);
+    }
+
+    public function logout()
+    {
+        auth()->user()->currentAccessToken()->delete();
+        return response()->json("logout");
     }
 
     /**

@@ -24,8 +24,7 @@ class EditOrderRequest extends FormRequest
         return [
             'price' => ['required', 'integer'],
             'address' => "required",
-            'user_id' => "required",
-            'product_id' => "required"
+            'user_id' => "required"
         ];
     }
 }

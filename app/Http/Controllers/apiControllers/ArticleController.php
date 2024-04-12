@@ -16,8 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::join('categories', 'categories.id', '=', 'articles.category_id')
-            ->select('articles.*', 'categories.categoryName', 'categories.description')
+        $articles = Article::with('category')
             ->orderBy('id', 'desc')
             ->paginate(5);
         return response()->json($articles);
@@ -45,7 +44,7 @@ class ArticleController extends Controller
      */
     public function show(string $article)
     {
-        $article = Article::find($article);
+        $article = Article::with('category')->find($article);
         return response()->json($article);
     }
 
