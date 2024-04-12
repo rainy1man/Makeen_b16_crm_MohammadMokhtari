@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\WebControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequests\CreateOrderRequest;
 use App\Http\Requests\OrderRequests\EditOrderRequest;
 use Illuminate\Http\Request;

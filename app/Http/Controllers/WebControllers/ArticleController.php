@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\WebControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequests\CreateArticleRequest;
 use App\Http\Requests\ArticleRequests\EditArticleRequest;
 use Illuminate\Http\Request;

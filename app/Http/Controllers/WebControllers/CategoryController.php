@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\WebControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequests\CreateCategoryRequest;
 use App\Http\Requests\CategoryRequests\EditCategoryRequest;
 use Illuminate\Http\Request;
