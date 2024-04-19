@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('productName');
-            $table->string('brand');
-            $table->enum('scent', ['خنک', 'گرم', 'ملایم', 'تلخ', 'شیرین', 'ترش']);
-            $table->enum('gender', ['آقایان', 'بانوان', 'آقایان/بانوان']);
-            $table->bigInteger('price');
+            $table->string('teamName');
             $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('teams');
     }
 };

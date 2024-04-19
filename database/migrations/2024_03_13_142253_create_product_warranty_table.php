@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_product', function (Blueprint $table) {
-            $table->foreignId('order_id')->constrained();
+        Schema::create('product_warranty', function (Blueprint $table) {
             $table->foreignId('product_id')->constrained();
-            $table->unique(['order_id', 'product_id']);
-            $table->unsignedInteger('quantity');
-            $table->timestamp('expire_at');
+            $table->foreignId('warranty_id')->constrained();
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_product');
+        Schema::dropIfExists('product_warranty');
     }
 };

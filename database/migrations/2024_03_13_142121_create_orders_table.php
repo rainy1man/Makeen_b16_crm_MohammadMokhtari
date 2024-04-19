@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->string('slug')->nullable();
-            $table->bigInteger('price');
-            $table->enum('paymentStatus', ['online', 'cash']);
+            $table->integer('totallAmount');
+            $table->integer('paymentMethod');
             $table->string('address');
+            $table->string('description')->nullable();
+            $table->integer('orderStatus');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

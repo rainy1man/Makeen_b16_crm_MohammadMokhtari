@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('warranties', function (Blueprint $table) {
             $table->id();
-            $table->string('categoryName');
-            $table->string('description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->string('title');
+            $table->timestamp('expiration');
+            $table->text('description')->nullable();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('warranties');
     }
 };
