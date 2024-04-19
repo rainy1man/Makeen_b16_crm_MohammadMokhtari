@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Article extends Model
+class Warranty extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,13 +17,9 @@ class Article extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'category_id',
-        'articleText'
-    ];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-}
+        'user_id',
+        'product_id',
+        'price',
+        'paymentStatus',
+        'address'
+    ];}

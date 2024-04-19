@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Category extends Model
+class Factor extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,8 +17,8 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'description',
-        'parent_id'
-    ];
-}
+        'totalAmount',
+        'status',
+        'order_id',
+        'user_id'
+    ];}

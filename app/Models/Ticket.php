@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Order extends Model
+class Ticket extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,21 +18,7 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
-        'slug',
-        'totallAmount',
-        'paymentMethod',
-        'address',
-        'description',
-        'orderStatus'
-    ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
-}
+        'subject',
+        'expire_at',
+        'message_id'
+    ];}
