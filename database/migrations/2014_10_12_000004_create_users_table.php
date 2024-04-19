@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phoneNumber')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
