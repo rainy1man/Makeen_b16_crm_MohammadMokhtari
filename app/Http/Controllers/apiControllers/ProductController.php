@@ -14,61 +14,43 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $id = null)
     {
-        $products = Product::orderBy('id', 'desc')->paginate(5);
-        return response()->json($products);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        if (!$id) {
+            $products = Product::with(['brand', 'category:id,title', 'warranties', 'labels'])->orderBy('id', 'desc')->paginate(10);
+            return response()->json($products);
+        } else {
+            $product = Product::with(['brand', 'category:id,title', 'warranties', 'labels'])->find($id);
+            return response()->json($product);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateProductRequest $request)
+    public function store(Request $request)
     {
         $product = Product::create($request->toArray());
+        $product->warranties()->attach($request->warranty_ids);
+        $product->labels()->attach($request->label_ids);
         return response()->json($product);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $product)
-    {
-        $product = Product::find($product);
-        return response()->json($product);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditProductRequest $request, string $product)
+    public function update(Request $request, string $id)
     {
-        $product = Product::where('id', $product)->update($request->toArray());
+        $product = Product::where('id', $id)->update($request->toArray());
         return response()->json($product);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $product)
+    public function destroy(string $id)
     {
-        $product = Product::destroy($product);
+        $product = Product::destroy($id);
         return response()->json($product);
     }
 }

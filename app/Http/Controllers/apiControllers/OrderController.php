@@ -14,61 +14,54 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $id)
     {
-        $orders = Order::with(['user', 'products'])->orderBy('id', 'desc')->paginate(5);
-        return response()->json($orders);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        if (!$id) {
+            $orders = Order::
+                with([
+                    'user:id,firstName,lastName,phoneNumber,email',
+                    'products:id,productName,price',
+                    'factor'
+                ])
+                ->orderBy('id', 'desc')
+                ->paginate(5);
+            return response()->json($orders);
+        } else {
+            $order = Order::with([
+                'user:id,firstName,lastName,phoneNumber,email',
+                'products:id,productName,price'
+            ])->find($id);
+            return response()->json($order);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateOrderRequest $request)
+    public function store(Request $request)
     {
         $order = Order::create($request->toArray());
-        return response()->json($order);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $order)
-    {
-        $order = Order::with(['user', 'product'])->find($order);
-        return response()->json($order);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        // $order->slug = $order->id . '-' . '0001';
+        // $order->save();
+        $order->products()->attach($request->product_ids);
+        return response()->json("ok");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditOrderRequest $request, string $order)
+    public function update(Request $request, string $id)
     {
-    $order = Order::where('id', $order)->update($request->toArray());
-    return response()->json($order);
+        $order = Order::where('id', $id)->update($request->toArray());
+        return response()->json($order);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $order)
+    public function destroy(string $id)
     {
-        $order = Order::destroy($order);
+        $order = Order::destroy($id);
         return response()->json($order);
     }
 }

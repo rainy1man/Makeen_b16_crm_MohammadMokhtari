@@ -41,24 +41,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->paginate(5);
+        $users = User::with(['ticket', 'labels', 'factor', 'tasks'])->orderBy('id', 'desc')->paginate(10);
         return response()->json($users);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
         $user = User::create($request->merge(["password" => Hash::make($request->password)])->toArray());
+        $user->labels()->attach($request->label_ids);
         return response()->json($user);
     }
 
@@ -67,16 +60,8 @@ class UserController extends Controller
      */
     public function show(string $user)
     {
-        $user = User::find($user);
+        $user = User::with('orders')->find($user);
         return response()->json($user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

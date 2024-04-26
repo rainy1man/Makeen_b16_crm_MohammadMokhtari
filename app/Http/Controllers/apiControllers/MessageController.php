@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(string $id = null)
     {
-        if (!$id)
+        if(!$id)
         {
-            $categories = Category::orderBy('id', 'desc')->paginate();
-            return response()->json($categories);
+          $messages = Message::orderBy('id', 'desc')->paginate(2);
+          return response()->json($messages);
         }
         else
         {
-            $category = Category::find($id);
-            return response()->json($category);
+          $message = Message::find($id);
+          return response()->json($message);
         }
     }
 
@@ -30,8 +30,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::insert($request->toArray());
-        return response()->json($category);
+        $message = Message::create($request->toArray());
+        return response()->json($message);
     }
 
     /**
@@ -39,8 +39,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category = Category::where('id', $id)->update($request->toArray());
-        return response()->json($category);
+        $message = Message::find($id)->update();
+        return response()->json($message);
     }
 
     /**
@@ -48,7 +48,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::destroy($id);
-        return response()->json($category);
+        $message = Message::destroy($id);
+        return response()->json($message);
     }
 }
