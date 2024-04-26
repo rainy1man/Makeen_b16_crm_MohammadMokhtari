@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->string('slug')->nullable();
-            $table->integer('totallAmount');
-            $table->integer('paymentMethod');
+            $table->integer('totall_amount');
+            $table->integer('payment_method');
             $table->string('address');
             $table->string('description')->nullable();
-            $table->integer('orderStatus');
+            $table->integer('status');
             $table->timestamps();
         });
     }

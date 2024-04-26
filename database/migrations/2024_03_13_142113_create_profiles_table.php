@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->integer('nationalNumber');
+            $table->string('avatar');
+            $table->integer('national_number');
             $table->enum('gender', ['مرد', 'زن']);
-            $table->date('birthDate');
+            $table->date('birth_date');
             $table->foreignId('province_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->foreignId('city_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->text('address');

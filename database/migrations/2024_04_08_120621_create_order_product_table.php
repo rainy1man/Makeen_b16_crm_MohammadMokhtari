@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->unique(['order_id', 'product_id']);
             $table->unsignedInteger('quantity');
-            $table->timestamp('expire_at');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
         });
     }
 

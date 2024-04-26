@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('parent_id');
-            $table->unique(['id', 'parent_id']);
         });
     }
 

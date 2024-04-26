@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
-            $table->foreignId('team_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->foreignId('factor_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->json('extra_information');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('transactions');
     }
 };

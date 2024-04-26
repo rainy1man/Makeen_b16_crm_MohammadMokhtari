@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lable_user', function (Blueprint $table) {
-            $table->foreignId('lable_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+        Schema::create('labelables', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('label_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->morphs('labelable');
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lable_user');
+        Schema::dropIfExists('labelables');
     }
 };
