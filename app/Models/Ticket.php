@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -19,6 +21,17 @@ class Ticket extends Model
     protected $fillable = [
         'user_id',
         'subject',
-        'expire_at',
-        'message_id'
-    ];}
+        'expires_at'
+    ];
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->HasOne(User::class);
+    }
+
+}

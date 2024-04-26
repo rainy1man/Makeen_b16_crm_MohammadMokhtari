@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,11 +21,10 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'slug',
-        'totallAmount',
-        'paymentMethod',
+        'total_amount',
+        'payment_method',
         'address',
-        'description',
-        'orderStatus'
+        'description'
     ];
 
     public function user()
@@ -35,5 +35,10 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    public function factor(): HasOne
+    {
+        return $this->hasOne(Factor::class);
     }
 }

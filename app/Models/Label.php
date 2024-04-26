@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Team extends Model
+class Label extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -20,23 +20,21 @@ class Team extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'team_name',
-        'description'
+        'label_name'
     ];
 
-    public function users(): HasMany
+    public function users(): MorphToMany
     {
-        return $this->hasMany(User::class);
+        return $this->morphedByMany(User::class, 'labelable');
     }
 
-    public function tasks(): MorphMany
+    public function teams(): MorphToMany
     {
-        return $this->MorphMany(Task::class, 'taskable');
+        return $this->morphedByMany(Team::class, 'labelable');
     }
 
-    public function labels(): MorphToMany
+    public function products(): MorphToMany
     {
-        return $this->morphToMany(Label::class, 'labelable');
+        return $this->morphedByMany(Product::class, 'labelable');
     }
-
 }

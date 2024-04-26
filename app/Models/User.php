@@ -4,6 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,9 +26,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'phoneNumber',
+        'first_name',
+        'last_name',
+        'phone_number',
         'email',
         'password',
         'team_id'
@@ -48,8 +54,33 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->BelongsTo(Team::class);
+    }
+
+    public function tasks(): MorphMany
+    {
+        return $this->MorphMany(Task::class, 'taskable');
+    }
+
+    public function ticket(): HasOne
+    {
+        return $this->HasOne(Ticket::class);
+    }
+
+    public function labels(): MorphToMany
+    {
+        return $this->morphToMany(Label::class, 'labelable');
+    }
+
+    public function factor(): HasOneThrough
+    {
+        return $this->hasOneThrough(Factor::class, Order::class);
     }
 }

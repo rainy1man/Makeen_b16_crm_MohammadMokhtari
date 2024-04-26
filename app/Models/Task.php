@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -19,6 +21,13 @@ class Task extends Model
     protected $fillable = [
         'title',
         'description',
-        'user_id',
-        'team_id'
-    ];}
+        'taskable_id',
+        'taskable_type'
+    ];
+
+    public function taskable(): MorphTo
+    {
+        return $this->MorphTo();
+    }
+
+}

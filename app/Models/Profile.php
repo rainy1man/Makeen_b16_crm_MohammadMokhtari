@@ -17,9 +17,10 @@ class Profile extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nationalNumber',
+        'avatar',
+        'national_number',
         'gender',
-        'birthDate',
+        'birth_date',
         'province_id',
         'city_id',
         'address',
