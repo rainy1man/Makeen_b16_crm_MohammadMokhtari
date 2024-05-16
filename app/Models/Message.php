@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -21,4 +22,11 @@ class Message extends Model
     protected $fillable = [
         'description',
         'ticket_id'
-    ];}
+    ];
+
+    public function ticket(): BelongsTo
+    {
+        return $this->BelongsTo(Ticket::class);
+    }
+
+}

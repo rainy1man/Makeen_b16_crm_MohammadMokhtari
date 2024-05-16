@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Notifications\Notifiable;
@@ -24,13 +25,9 @@ class Factor extends Model
         'order_id'
     ];
 
-    public function order(): HasOne
+    public function order(): BelongsTo
     {
-        return $this->hasOne(Order::class);
+        return $this->BelongsTo(Order::class);
     }
 
-    public function user(): HasOneThrough
-    {
-        return $this->hasOneThrough(User::class, Order::class);
-    }
 }

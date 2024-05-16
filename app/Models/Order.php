@@ -21,10 +21,11 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'slug',
-        'total_amount',
+        'totall_amount',
         'payment_method',
         'address',
-        'description'
+        'description',
+        'status'
     ];
 
     public function user()
@@ -37,7 +38,7 @@ class Order extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function factor(): HasOne
+    public function userFactors(): HasOne
     {
         return $this->hasOne(Factor::class);
     }

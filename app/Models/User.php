@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -54,6 +56,36 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+       /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['full_name'];
+
+      /**
+     * Determine if the user is an administrator.
+     */
+    // public function getFullNameAttribute()
+    // {
+    //     return $this->first_name.' '.$this->last_name;
+    // }
+
+        /**
+     * Determine if the user is an administrator.
+     */
+    protected function fullName(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->first_name.' '.$this->last_name
+        );
+    }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
@@ -79,8 +111,8 @@ class User extends Authenticatable
         return $this->morphToMany(Label::class, 'labelable');
     }
 
-    public function factor(): HasOneThrough
+    public function userFactors(): HasManyThrough
     {
-        return $this->hasOneThrough(Factor::class, Order::class);
+        return $this->HasManyThrough(Factor::class, Order::class);
     }
 }
