@@ -4,6 +4,7 @@ namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -27,7 +28,9 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $ticket = Ticket::create($request->toArray());
+        $ticket = Ticket::create($request->merge([
+            "expires_at" => Carbon::now()->addDays(1)
+        ])->toArray());
         return response()->json($ticket);
     }
 

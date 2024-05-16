@@ -14,7 +14,7 @@ class ProfileController extends Controller
     public function index(string $id = null)
     {
         if (!$id) {
-            $profiles = Profile::orderBy('id', 'desc')->paginate(10);
+            $profiles = Profile::with(['city:id,city_name', 'province:id,province_name', 'user:id,first_name,last_name,phone_number,email,team_id'])->orderBy('id', 'desc')->paginate(10);
             return response()->json($profiles);
         } else {
             $profile = Profile::find($id);
@@ -27,7 +27,10 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $profile = Profile::create($request->toArray());
+        $path = $request->file('avatar')->store('public/avatars');
+        $profile = Profile::create($request->merge([
+            "avatar" => $path
+        ])->toArray());
         return response()->json($profile);
     }
 

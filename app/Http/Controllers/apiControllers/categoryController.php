@@ -15,7 +15,7 @@ class CategoryController extends Controller
     {
         if (!$id)
         {
-            $categories = Category::orderBy('id', 'desc')->paginate();
+            $categories = Category::with('categories')->orderBy('id', 'desc')->paginate();
             return response()->json($categories);
         }
         else

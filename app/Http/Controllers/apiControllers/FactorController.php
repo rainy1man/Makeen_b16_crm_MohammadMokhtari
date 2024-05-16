@@ -14,7 +14,7 @@ class FactorController extends Controller
     public function index(string $id = null)
     {
         if (!$id) {
-            $factors = Factor::orderBy('id', 'desc')->paginate(10);
+            $factors = Factor::with('order.user')->orderBy('id', 'desc')->paginate(10);
             return response()->json($factors);
         } else {
             $factor = Factor::find($id);

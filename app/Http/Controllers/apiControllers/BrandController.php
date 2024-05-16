@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BerandResource;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,10 @@ class BrandController extends Controller
     {
         if (!$id) {
             $brands = Brand::orderBy('id', 'desc')->paginate(10);
-            return response()->json($brands);
+            return BerandResource::collection( $brands );
         } else {
             $brand = Brand::find($id);
-            return response()->json($brand);
+            return BerandResource::make( $brand );
         }
     }
 

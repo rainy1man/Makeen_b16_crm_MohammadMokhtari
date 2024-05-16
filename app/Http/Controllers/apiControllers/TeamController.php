@@ -14,7 +14,7 @@ class TeamController extends Controller
     public function index(string $id = null)
     {
         if (!$id) {
-            $teams = Team::with(['labels'])->orderBy('id', 'desc')->paginate(10);
+            $teams = Team::with(['labels', 'users'])->orderBy('id', 'desc')->paginate(10);
             return response()->json($teams);
         } else {
             $team = Team::with(['labels'])->find($id);
