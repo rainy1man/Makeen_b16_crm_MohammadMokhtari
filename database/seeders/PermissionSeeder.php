@@ -105,6 +105,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ticket.update']);
         Permission::create(['name' => 'ticket.delete']);
         Permission::create(['name' => 'ticket.read']);
-    }
 
+        // Media Permissions
+        Permission::create(['name' => 'media.store']);
+        Permission::create(['name' => 'media.update']);
+        Permission::create(['name' => 'media.delete']);
+        Permission::create(['name' => 'media.read']);
+    }
 }
