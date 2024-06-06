@@ -19,7 +19,6 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'image_path' => fake()->imageUrl(640, 480, 'star', true),
             'product_name' => fake()->word(),
             'brand_id' => Brand::all()->random(),
             'category_id' => Category::all()->random(),

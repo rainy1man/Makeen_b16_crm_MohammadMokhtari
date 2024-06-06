@@ -7,7 +7,7 @@ use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LabelController extends Controller
+class LabelController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -50,7 +50,7 @@ class LabelController extends Controller
         return response()->json($label);
     }
 
-    public function add(Request $request, User $user)
+    public function add(Request $request, User $user, $id)
     {
         $user = User::find($id);
         $user->labels()->sync($request->label_ids);

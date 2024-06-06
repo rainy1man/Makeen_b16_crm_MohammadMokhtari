@@ -23,7 +23,6 @@ class ProfileFactory extends Factory
             'national_number' => '00' . fake()->randomNumber(8),
             'gender' => fake()->randomElement(['زن', 'مرد']),
             'birth_date' => fake()->date(),
-            'address' => fake()->text(100),
         ];
     }
 }

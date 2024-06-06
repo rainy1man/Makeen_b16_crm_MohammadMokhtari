@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
-class ProvinceController extends Controller
+class ProvinceController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProvinceController extends Controller
     public function index(string $id = null)
     {
         if (!$id) {
-            $provinces = Province::orderBy('id', 'desc')->paginate(10);
+            $provinces = Province::all();
             return response()->json($provinces);
         } else {
             $province = Province::find($id);

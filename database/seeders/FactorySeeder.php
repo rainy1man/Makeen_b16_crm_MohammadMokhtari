@@ -53,8 +53,12 @@ class FactorySeeder extends Seeder
             $province = Province::inRandomOrder()->first();
             // Get a random city belonging to the selected province
             $city = $province->cities()->inRandomOrder()->first();
-            Profile::factory()->for($user)->for($province)->for($city)->create();
+            $address = $province->province_name . ' ' . $city->city_name . ' ' . fake()->streetAddress();
+            Profile::factory()->for($user)->for($province)->for($city)->create([
+                'address' => $address,
+            ]);
         }
+        
 
         // Create 5 brands with specific name
         $brandNames = ['دیور', 'شنل', 'تام فورد', 'کلیر دلالون', 'فراری', 'آزارو', 'کرید', 'ارض الزعفران', 'اسمارت', 'الحمبرا'];
@@ -95,12 +99,12 @@ class FactorySeeder extends Seeder
         }
 
         // create 4 task for random users and 4 task for random teams
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 4; $x++) {
             $users = User::inRandomOrder()->first();
-            Task::factory(4)->for($users, 'taskable')->create();
+            Task::factory()->for($users, 'taskable')->create();
         }
 
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 1; $x <= 4; $x++) {
             $teams = Team::inRandomOrder()->first();
             Task::factory()->for($teams, 'taskable')->create();
         }

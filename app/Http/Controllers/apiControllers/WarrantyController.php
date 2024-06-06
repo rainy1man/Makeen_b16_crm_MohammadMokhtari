@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Warranty;
 use Illuminate\Http\Request;
 
-class WarrantyController extends Controller
+class WarrantyController extends ApiController
 {
     /**
      * Display a listing of the resource.

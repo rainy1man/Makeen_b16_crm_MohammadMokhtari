@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Factor;
 use Illuminate\Http\Request;
 
-class FactorController extends Controller
+class FactorController extends ApiController
 {
     /**
      * Display a listing of the resource.

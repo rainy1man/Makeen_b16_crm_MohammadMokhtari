@@ -22,7 +22,7 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => "required",
+            'first_name' => "required",
             'lastName' => "required",
             'nationalCode' => "required|unique:users,nationalCode",
             'phoneNumber' => ['required', 'digits:11', 'unique:users,phoneNumber', 'regex:/(09)[0-9]{9}/'],

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mediable', function (Blueprint $table) {
+        Schema::create('fileables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('media_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->morphs('mediable');
+            $table->foreignId('file_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->morphs('fileable');
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mediable');
+        Schema::dropIfExists('fileables');
     }
 };

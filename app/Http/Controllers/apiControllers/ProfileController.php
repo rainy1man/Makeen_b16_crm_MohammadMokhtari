@@ -3,21 +3,30 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequests\CreateProfileRequest;
+use App\Http\Requests\ProfileRequests\EditProfileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class ProfileController extends ApiController
 {
     /**
      * Display a listing of the resource.
      */
     public function index(string $id = null)
     {
+        $profiles = new Profile();
+        $profiles = $profiles->with([
+            'city:id,city_name',
+            'province:id,province_name',
+            'user:id,first_name,last_name,phone_number,email,team_id',
+            'media'
+        ]);
         if (!$id) {
-            $profiles = Profile::with(['city:id,city_name', 'province:id,province_name', 'user:id,first_name,last_name,phone_number,email,team_id'])->orderBy('id', 'desc')->paginate(10);
+            $profiles = $profiles->orderBy('id', 'desc')->paginate(25);
             return response()->json($profiles);
         } else {
-            $profile = Profile::find($id);
+            $profile = $profiles->find($id);
             return response()->json($profile);
         }
     }
@@ -25,7 +34,7 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProfileRequest $request)
     {
         $path = $request->file('avatar')->store('public/avatars');
         $profile = Profile::create($request->merge([
@@ -37,7 +46,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EditProfileRequest $request, string $id)
     {
         $profile = Profile::find($id)->update($request->toArray());
         return response()->json($profile);

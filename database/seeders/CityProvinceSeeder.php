@@ -15,13 +15,13 @@ class CityProvinceSeeder extends Seeder
     public function run(): void
     {
         // Create 5 brands
-        $provinces = ['تهران', 'اصفهان', 'مشهد', 'مازندران', 'یزد', 'فارس', 'البرز'];
+        $provinces = ['تهران', 'اصفهان', 'خراسان رضوی', 'مازندران', 'یزد', 'فارس', 'البرز'];
         foreach ($provinces as $province) {
             Province::create(["province_name" => $province]);
         }
 
         // Create 5 brands
-        $cities = ['تهران', 'ری', 'شهریار', 'اسلامشهر', 'پاکدشت', 'ورامین', 'ری'];
+        $cities = ['تهران', 'ری', 'شهریار', 'اسلامشهر', 'پاکدشت', 'ورامین'];
         foreach ($cities as $city) {
             City::create([
                 "city_name" => $city,
@@ -39,7 +39,7 @@ class CityProvinceSeeder extends Seeder
         }
 
         // Create 5 brands
-        $cities = ['مشهد', 'ری', 'شهریار', 'اسلامشهر', 'پاکدشت', 'ورامین', 'ری'];
+        $cities = ['مشهد', 'نیشابور', 'سبزوار', 'تربت حیدریه', 'طرقبه', 'سرخس', 'کاشمر'];
         foreach ($cities as $city) {
             City::create([
                 "city_name" => $city,

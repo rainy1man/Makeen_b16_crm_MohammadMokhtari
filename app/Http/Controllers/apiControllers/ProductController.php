@@ -25,7 +25,7 @@ class ProductController extends ApiController
                 return response()->json($product);
             }
         } else {
-            return $this->unauthorized_response();
+            return $this->response403();
         }
     }
 
@@ -34,16 +34,18 @@ class ProductController extends ApiController
      */
     public function store(Request $request)
     {
-        if ($request->image_path != null) {
-            $path = $request->file('image_path')->store('public/product_images');
-            $product = Product::create($request->merge([
-                "image_path" => $path
-            ])->toArray());
-        } else {
-            $product = Product::create($request->toArray());
+        $product = Product::create($request->toArray());
+        if ($request->hasFile('image')) {
+            $product->addMedia($request->file('image'))->toMediaCollection('primary_product_images');
         }
-        $product->warranties()->attach($request->warranty_ids);
-        $product->labels()->attach($request->label_ids);
+        if ($request->hasFile('images')) {
+            dd($request->files('images'));
+            foreach ($request->file('images') as $image) {
+                $product->addMedia($image)->toMediaCollection('product_images');
+            }
+        }
+        // $product->warranties()->attach($request->warranty_ids);
+        // $product->labels()->attach($request->label_ids);
         return response()->json($product);
     }
 

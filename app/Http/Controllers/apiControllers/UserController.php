@@ -12,28 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function login(Request $request)
-    {
-        $user = User::where('phone_number', $request->phone_number)->first();
-
-        if (!$user) {
-            return response()->json('not found');
-        }
-        if (!Hash::check($request->password, $user->password)) {
-            return response()->json('pass not found');
-        }
-        $token = $user->createToken($request->phone_number)->plainTextToken;
-        return response()->json(["token" => $token]);
-    }
-
-    public function logout()
-    {
-        auth()->user()->currentAccessToken()->delete();
-        return response()->json("logout");
-    }
 
     /**
      * Display a listing of the resource.
@@ -54,10 +32,10 @@ class UserController extends ApiController
                     $users = $users->withCount('orders');
                 }
                 $users = $users->orderBy('id', 'desc')->paginate(10);
-                return $this->success_response($users);
+                return $this->response200($users);
             } else {
                 $user = User::with(['orders', 'ticket', 'labels', 'userFactors', 'tasks'])->find($id);
-                return $this->success_response($user);
+                return $this->response200($user);
             }
         } else {
             return $this->unauthorized_response();
@@ -73,7 +51,7 @@ class UserController extends ApiController
             $user = User::create($request->merge(["password" => Hash::make($request->password)])->toArray());
             $user->labels()->attach($request->label_ids);
             $user->assignRole('user'); // default role for new users is user
-            return response()->json($user);
+            return $this->response200($user);
         } else {
             return response()->json('user does not have permission', 403);
         }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\apiControllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BerandResource;
+use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class BrandController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class BrandController extends Controller
     public function index(string $id = null)
     {
         if (!$id) {
-            $brands = Brand::orderBy('id', 'desc')->paginate(10);
-            return BerandResource::collection( $brands );
+            $brands = Brand::all();
+            return BrandResource::collection($brands);
         } else {
             $brand = Brand::find($id);
-            return BerandResource::make( $brand );
+            return BrandResource::make($brand);
         }
     }
 

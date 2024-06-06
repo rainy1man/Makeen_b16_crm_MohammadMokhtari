@@ -5,12 +5,15 @@ namespace App\Http\Controllers\apiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequests\CreateOrderRequest;
 use App\Http\Requests\OrderRequests\EditOrderRequest;
+use App\Mail\ExampleMail;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends ApiController
 {
@@ -34,20 +37,25 @@ class OrderController extends ApiController
                         $query->where('phone_number', $request->phone_number);
                     });
                 }
+
+                if ($request->user_id) {
+                    $orders = $orders->where('user_id', $request->user_id);
+                }
+
                 $orders = $orders->orderByDesc('id')->paginate(25);
             } else {
                 $orders = $orders->find($id);
             }
 
-            return $this->success_response($orders);
+            return $this->response200($orders);
 
         } else {
             if (!$id) {
                 $orders = Order::where('user_id', $request->user()->id)->with(['products:id,product_name'])
                     ->orderby('id', 'desc')->paginate(5);
-                return $this->success_response($orders);
+                return $this->response200($orders);
             } else {
-                return $this->unauthorized_response();
+                return $this->response403();
             }
         }
     }
@@ -57,8 +65,8 @@ class OrderController extends ApiController
      */
     public function store(Request $request)
     {
-        if (!$request->user()->can('order.create')) {
-            return $this->error_response();
+        if (!$request->user()->can('order.store')) {
+            return $this->response403();
         }
 
         $products = array_map(function ($product) {
@@ -87,7 +95,11 @@ class OrderController extends ApiController
                 ]
             );
         }
-        return $this->success_response($order);
+        
+        $user = User::find($request->user_id);
+        Mail::send(new ExampleMail($user));
+
+        return $this->response200($order);
     }
 
     /**
