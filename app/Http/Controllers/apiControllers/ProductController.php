@@ -39,7 +39,6 @@ class ProductController extends ApiController
             $product->addMedia($request->file('image'))->toMediaCollection('primary_product_images');
         }
         if ($request->hasFile('images')) {
-            dd($request->files('images'));
             foreach ($request->file('images') as $image) {
                 $product->addMedia($image)->toMediaCollection('product_images');
             }

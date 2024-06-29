@@ -17,6 +17,7 @@
         "symfony/mailgun-mailer": "^7.1"
     },
     "require-dev": {
+        "darkaonline/l5-swagger": "^8.6",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

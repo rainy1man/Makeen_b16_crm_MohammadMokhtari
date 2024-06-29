@@ -12,9 +12,39 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
-
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Display a listing of the users",
+     *     @OA\Parameter(
+     *         name="has_orders",
+     *         in="query",
+     *         description="Filter users with orders",
+     *         required=false,
+     *         @OA\Schema(type="boolean")
+     *     ),
+     *     @OA\Parameter(
+     *         name="order_sum",
+     *         in="query",
+     *         description="Include order sum",
+     *         required=false,
+     *         @OA\Schema(type="boolean")
+     *     ),
+     *     @OA\Parameter(
+     *         name="order_count",
+     *         in="query",
+     *         description="Include order count",
+     *         required=false,
+     *         @OA\Schema(type="boolean")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/User"))
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     security={{"api_key": {}}}
+     * )
      */
     public function index(Request $request, string $id = null)
     {
@@ -43,7 +73,21 @@ class UserController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/users",
+     *     summary="Store a newly created user",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(response=403, description="User does not have permission"),
+     *     security={{"api_key": {}}}
+     * )
      */
     public function store(Request $request)
     {
@@ -58,7 +102,28 @@ class UserController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/users/{id}",
+     *     summary="Update the specified user",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the user to update",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(response=403, description="User does not have permission"),
+     *     security={{"api_key": {}}}
+     * )
      */
     public function update(Request $request, string $id)
     {
@@ -71,19 +136,48 @@ class UserController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/users/{id}",
+     *     summary="Remove the specified user",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the user to delete",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="integer")
+     *     ),
+     *     @OA\Response(response=403, description="User does not have permission"),
+     *     security={{"api_key": {}}}
+     * )
      */
     public function destroy(Request $request, string $id)
     {
         if ($request->user()->can('user.delete') || $request->user()->id == $id) {
             $user = User::destroy($id);
             return response()->json($user);
+        } else {
+            return response()->json('user does not have permission', 403);
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/test",
+     *     summary="Test endpoint",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent()
+     *     )
+     * )
+     */
     public function test()
     {
         return response()->json();
     }
 }
-

@@ -11,15 +11,10 @@ class CityController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id = null)
+    public function index(string $province_id)
     {
-        if (!$id) {
-            $cities = City::orderBy('id', 'desc')->paginate(10);
-            return response()->json($cities);
-        } else {
-            $city = City::find($id);
-            return response()->json($city);
-        }
+        $cities = City::where('province_id', $province_id)->get();
+        return response()->json($cities);
     }
 
     /**

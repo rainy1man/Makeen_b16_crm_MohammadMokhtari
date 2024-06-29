@@ -108,7 +108,7 @@ class MediaController extends ApiController
         if (!$model) {
             return $this->response404();
         }
-        $media = $model->media()->find($media_id)->delete();
+        $model->media()->find($media_id)->delete();
         return $this->delete_response();
     } else {
         return $this->response403();
